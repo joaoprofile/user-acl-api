@@ -1,0 +1,87 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id                  String     @id @default(uuid())
+  tenant              Tenant     @relation(fields: [tenant_id], references: [id])
+  tenant_id           String     @unique
+  name                String
+  email               String     @unique
+  password_hash       String
+  is_AccountConfirmed Boolean    @default(false)
+  is_active           Boolean    @default(false)
+  last_login          DateTime   @default(now())
+  created_at          DateTime   @default(now())
+  usersRoles          UserRole[]
+
+  @@map("users")
+}
+
+model Tenant {
+  id         String   @id @default(uuid())
+  name       String
+  email      String   @unique
+  cpf_cnpj   String   @unique
+  cep        String
+  address    String
+  complement String
+  country    String
+  city       String
+  state      String
+  updated_at DateTime @updatedAt
+  created_at DateTime @default(now())
+
+  users User[]
+  @@map("tenants")
+}
+
+model UserRole {
+  id      String @id @default(uuid())
+  user    User   @relation(fields: [user_id], references: [id])
+  user_id String
+  role_id String
+  role    Role   @relation(fields: [role_id], references: [id])
+
+  @@map("users_roles")
+}
+
+model Role {
+  id               String           @id @default(uuid())
+  tenant_id        String?
+  name             String
+  description      String
+  created_at       DateTime         @default(now())
+  rolesPermissions RolePermission[]
+  usersRoles       UserRole[]
+
+  @@unique([tenant_id, name])
+  @@map("roles")
+}
+
+model Permission {
+  id               String           @id @default(uuid())
+  resource         String           @unique
+  method           String
+  action           String
+  description      String
+  created_at       DateTime         @default(now())
+  rolesPermissions RolePermission[]
+
+  @@map("permissions")
+}
+
+model RolePermission {
+  id            String     @id @default(uuid())
+  role_id       String
+  role          Role       @relation(fields: [role_id], references: [id])
+  permission    Permission @relation(fields: [permission_id], references: [id])
+  permission_id String
+
+  @@map("roles_permissions")
+}
