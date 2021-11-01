@@ -15,9 +15,10 @@
 ## ✨ Padrões e Princípios
 
 Esse projeto foi desenvolvido com os seguintes Padrões:
-- Controller design pattern
+- Controller pattern
 - Service pattern
 - Repository pattern
+- IoC
 
 Princípios SOLID:
 - Dependency inversion principle
