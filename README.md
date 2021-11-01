@@ -31,7 +31,6 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 - [Prisma](https://www.prisma.io/)
 - [JSON Web Token](https://jwt.io/)
 - [BCryptJS](https://www.npmjs.com/package/bcryptjs/)
-- [Socket.IO](https://socket.io/)
 - [Celebrate](https://github.com/arb/celebrate/)
 
 ## 🚀 Como executar
