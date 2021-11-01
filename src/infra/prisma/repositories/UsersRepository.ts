@@ -53,6 +53,7 @@ export class UsersRepository implements IUsersRepository {
         email,
         password_hash,
         is_active: true,
+        is_AccountConfirmed: true, // TODO, implements
         tenant: {
           connect: {
             id: tenant_id,

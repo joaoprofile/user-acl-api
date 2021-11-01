@@ -47,6 +47,7 @@ export class TenantsRepository implements ITenantsRepository {
         email: user.email,
         password_hash: user.password_hash,
         is_active: true,
+        is_AccountConfirmed: true, // TODO, implements
         roles: {
           create: [
             {
