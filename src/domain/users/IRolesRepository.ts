@@ -1,4 +1,4 @@
-import { IRoleDTO } from "../dto/IRoleDTO"
+import { IRoleDTO } from "./dto/IRoleDTO"
 
 export interface IRolesRepository {
   findAll(tenant_id: string): Promise<IRoleDTO[]>

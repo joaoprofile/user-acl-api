@@ -1,39 +1,21 @@
 import { inject, injectable } from 'tsyringe'
+import { IPermissionDTO } from '../users/dto/IPermissionDTO'
 
-import { AppError, AppErrorType } from '../../core/exception/AppError'
-import { IRoleDTO } from '../dto/IRoleDTO'
-import { IRolesRepository } from './IRolesRepository'
+import { IPermissionsRepository } from './IPermissionsRepository'
 
 @injectable()
 export class CreatePermissionService {
 
   constructor(
-    @inject('RolesRepository')
-    private rolesRepository: IRolesRepository,
+    @inject('PermissionsRepository')
+    private permissionsRepository: IPermissionsRepository,
   ) {
   }
 
-  async execute(entity: IRoleDTO) {
-    const { tenant_id, name, description } = entity
-    console.log(entity)
-    const role = await this.rolesRepository.findByName(tenant_id, name)
+  async execute(entity: IPermissionDTO) {
+    const createdPermission = await this.permissionsRepository.save(entity)
 
-    if (role) {
-      throw new AppError({
-        status: 409,
-        type: AppErrorType.CONFLICT_ERROR,
-        userMessage: 'Já existe uma Role com este nome'
-      })
-    }
-
-    const newRole: IRoleDTO = {
-      tenant_id,
-      name,
-      description,
-    }
-
-    const createdRole = await this.rolesRepository.save(newRole)
-
-    return createdRole
+    return createdPermission
   }
+
 }

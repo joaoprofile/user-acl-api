@@ -3,8 +3,8 @@ import { inject, injectable } from 'tsyringe'
 import { AppError, AppErrorType } from '../../core/exception/AppError'
 
 import { ITenantsRepository } from './ITenantsRepository'
-import { ISignupDTO } from '../dto/ISignupDTO'
-import { ITenantDTO } from '../dto/ITenantDTO'
+import { ISignupDTO } from './dto/ISignupDTO'
+import { ITenantDTO } from './dto/ITenantDTO'
 import { BCryptHashProvider } from '../../infra/providers/BCryptHashProvider'
 import { IRolesRepository } from '../users/IRolesRepository'
 
@@ -47,7 +47,7 @@ export class CreateUserAccountService {
     entity.password = hashedPassword
 
     const role = await this.rolesRepository.findByName(null, 'admin')
-    if (role) {
+    if (!role) {
       throw new AppError({
         status: 404,
         type: AppErrorType.RESOURCE_NOT_FOUND,

@@ -1,5 +1,5 @@
 import prismaClient from ".."
-import { IUserDTO } from "../../../domain/dto/IUserDTO"
+import { IUserDTO } from "../../../domain/users/dto/IUserDTO"
 import { IUsersRepository } from "../../../domain/users/IUsersRepository"
 
 export class UsersRepository implements IUsersRepository {
@@ -24,41 +24,49 @@ export class UsersRepository implements IUsersRepository {
       where: {
         email: email
       },
+      select: {
+        id: true,
+        tenant_id: true,
+        name: true,
+        email: true,
+        password_hash: true,
+        is_active: true,
+        is_AccountConfirmed: true,
+      }
     })
+
     return user
   }
 
   public async save(entity: IUserDTO): Promise<IUserDTO> {
-    // const { user, tenant } = entity
+    const {
+      tenant_id,
+      name,
+      email,
+      password_hash,
+      role_id
+    } = entity
 
-    // const tenantCreated = await this.prisma.user.create({
-    //   data: {
-    //     name: user.name,
-    //     email: user.email,
-    //     password_hash: user.password_hash,
-    //     is_active: true,
-    //     usersRoles: {
-    //       create: [
-    //         {
-    //           role: { connect: { name: 'root', } }
-    //         }
-    //       ]
-    //     },
-    //     tenant: {
-    //       create: {
-    //         name: tenant.name,
-    //         email: tenant.email,
-    //         cpf_cnpj: tenant.cpf_cnpj,
-    //         cep: tenant.cep,
-    //         address: tenant.address,
-    //         complement: tenant.complement,
-    //         country: tenant.country,
-    //         city: tenant.city,
-    //         state: tenant.state,
-    //       }
-    //     }
-    //   }
-    // })
+    const userCreated = await this.prisma.user.create({
+      data: {
+        name,
+        email,
+        password_hash,
+        is_active: true,
+        tenant: {
+          connect: {
+            id: tenant_id,
+          }
+        },
+        roles: {
+          create: [
+            {
+              role: { connect: { id: role_id } }
+            }
+          ]
+        },
+      }
+    })
 
     return entity
   }

@@ -1,5 +1,5 @@
 import prismaClient from ".."
-import { IRoleDTO } from "../../../domain/dto/IRoleDTO"
+import { IRoleDTO } from "../../../domain/users/dto/IRoleDTO"
 import { IRolesRepository } from "../../../domain/users/IRolesRepository"
 
 export class RolesRepository implements IRolesRepository {
@@ -14,6 +14,23 @@ export class RolesRepository implements IRolesRepository {
     const roles = await this.prisma.role.findMany({
       where: {
         tenant_id: tenant_id,
+      },
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        permissions: {
+          select: {
+            permission: {
+              select: {
+                id: true,
+                method: true,
+                action: true,
+                description: true,
+              }
+            }
+          }
+        },
       },
     })
     return roles

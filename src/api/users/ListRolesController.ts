@@ -2,7 +2,7 @@ import { Request, Response } from "express"
 
 import { container } from "tsyringe"
 
-import { IRoleDTO } from "../../domain/dto/IRoleDTO"
+import { IRoleDTO } from "../../domain/users/dto/IRoleDTO"
 import { ListRoleService } from "../../domain/users/ListRoleService"
 import * as result from "../common/ResponseType"
 

@@ -49,7 +49,6 @@ CREATE TABLE "roles" (
 -- CreateTable
 CREATE TABLE "permissions" (
     "id" TEXT NOT NULL PRIMARY KEY,
-    "resource" TEXT NOT NULL,
     "method" TEXT NOT NULL,
     "action" TEXT NOT NULL,
     "description" TEXT NOT NULL,
@@ -66,9 +65,6 @@ CREATE TABLE "roles_permissions" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "users_tenant_id_key" ON "users"("tenant_id");
-
--- CreateIndex
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
 -- CreateIndex
@@ -79,6 +75,3 @@ CREATE UNIQUE INDEX "tenants_cpf_cnpj_key" ON "tenants"("cpf_cnpj");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "roles_tenant_id_name_key" ON "roles"("tenant_id", "name");
-
--- CreateIndex
-CREATE UNIQUE INDEX "permissions_resource_key" ON "permissions"("resource");

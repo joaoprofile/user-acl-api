@@ -15,6 +15,7 @@ class UsersRoutes extends Route {
           name: Joi.string().required(),
           email: Joi.string().email().required(),
           password: Joi.string().required(),
+          role_id: Joi.string().required(),
         },
       }),
 

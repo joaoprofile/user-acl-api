@@ -4,7 +4,7 @@ import { container } from "tsyringe"
 
 import * as result from "../common/ResponseType"
 import { CreateRoleService } from "../../domain/users/CreateRoleService"
-import { IRoleDTO } from "../../domain/dto/IRoleDTO"
+import { IRoleDTO } from "../../domain/users/dto/IRoleDTO"
 
 export class CreateRoleController {
   async handle(request: Request, response: Response) {

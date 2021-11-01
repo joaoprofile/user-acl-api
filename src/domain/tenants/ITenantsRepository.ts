@@ -1,5 +1,4 @@
-import { ISignupDTO } from "../dto/ISignupDTO"
-import { ITenantDTO } from "../dto/ITenantDTO"
+import { ITenantDTO } from "./dto/ITenantDTO"
 
 export interface ITenantsRepository {
   findById(id: string): Promise<ITenantDTO>

@@ -25,7 +25,7 @@ export class App {
 
     this.application.get('/', (request, response) => {
       return response.status(200).json({
-        service: 'Small ERP API',
+        service: 'User ACL API',
         version: '1',
         resources: [
           `POST: ${config.SERVER.BASE_URL}/accounts/sign-up`,

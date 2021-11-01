@@ -1,7 +1,7 @@
 import { Request, Response } from "express"
 
 import { container } from "tsyringe"
-import { IAccessTokenResponseDTO } from "../../domain/dto/IAccessTokenResponseDTO"
+import { IAccessTokenResponseDTO } from "../../domain/users/dto/IAccessTokenResponseDTO"
 
 import { AuthSignInService } from "../../domain/users/AuthSignInService"
 import * as result from "../common/ResponseType"

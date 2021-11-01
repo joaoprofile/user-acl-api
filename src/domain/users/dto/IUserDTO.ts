@@ -1,6 +1,7 @@
 export interface IUserDTO {
   id?: string
-  tenant_id: string
+  tenant_id?: string
+  role_id?: string
   name: string
   email: string
   password_hash: string

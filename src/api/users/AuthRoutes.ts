@@ -40,17 +40,28 @@ class AuthRoutes extends Route {
       new CreateRoleController().handle
     )
 
+    // Array Valid 
+    // celebrate({
+    //   [Segments.BODY]: {
+    //     role_id: Joi.string().required(),
+    //     permissions: Joi.array().items(Joi.object({
+    //       method: Joi.string().required(),
+    //       action: Joi.string().required(),
+    //       description: Joi.string().required(),
+    //     }))
+    //   },
+    // }),
+
     route.post(
       '/auth/permissions',
       celebrate({
         [Segments.BODY]: {
           role_id: Joi.string().required(),
-          permissions: Joi.array().items(Joi.object({
-            resource: Joi.string().required(),
+          permission: Joi.object({
             method: Joi.string().required(),
             action: Joi.string().required(),
             description: Joi.string().required(),
-          }))
+          })
         },
       }),
       EnsureAuthentication,

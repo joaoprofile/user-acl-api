@@ -1,4 +1,4 @@
-import { IUserDTO } from "../dto/IUserDTO"
+import { IUserDTO } from "../users/dto/IUserDTO"
 
 export interface IUsersRepository {
   findById(id: string): Promise<IUserDTO>

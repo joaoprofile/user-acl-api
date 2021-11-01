@@ -1,7 +1,7 @@
 import { inject, injectable } from 'tsyringe'
 
 import { AppError, AppErrorType } from '../../core/exception/AppError'
-import { IRoleDTO } from '../dto/IRoleDTO'
+import { IRoleDTO } from './dto/IRoleDTO'
 import { IRolesRepository } from './IRolesRepository'
 
 @injectable()

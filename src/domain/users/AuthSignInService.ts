@@ -4,7 +4,7 @@ import { inject, injectable } from 'tsyringe'
 import { config } from '../../core/config/environment'
 import { AppError, AppErrorType } from '../../core/exception/AppError'
 import { IHashProvider } from '../../core/providers/IHashProvider'
-import { IAccessTokenResponseDTO } from '../dto/IAccessTokenResponseDTO'
+import { IAccessTokenResponseDTO } from '../users/dto/IAccessTokenResponseDTO'
 import { IUsersRepository } from './IUsersRepository'
 
 interface IUserSignIn {
@@ -26,6 +26,7 @@ export class AuthSignInService {
 
   async execute({ email, password }: IUserSignIn): Promise<IAccessTokenResponseDTO> {
     const user = await this.usersRepository.findByEmail(email)
+
     if (!user) {
       throw new AppError({
         status: 401,
@@ -33,7 +34,6 @@ export class AuthSignInService {
         userMessage: 'Login e/ou Senha não conferem'
       })
     }
-    console.log(user)
     if (!user.is_active) {
       throw new AppError({
         status: 401,
@@ -77,7 +77,7 @@ export class AuthSignInService {
 
     // Update last login
     user.last_login = new Date()
-    await this.usersRepository.save(user)
+    // await this.usersRepository.save(user)
 
     delete user.password_hash
 

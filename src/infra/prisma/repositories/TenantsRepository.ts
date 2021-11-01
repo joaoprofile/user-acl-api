@@ -1,6 +1,6 @@
 import prismaClient from ".."
 
-import { ITenantDTO } from "../../../domain/dto/ITenantDTO"
+import { ITenantDTO } from "../../../domain/tenants/dto/ITenantDTO"
 import { ITenantsRepository } from "../../../domain/tenants/ITenantsRepository"
 
 export class TenantsRepository implements ITenantsRepository {
@@ -47,7 +47,7 @@ export class TenantsRepository implements ITenantsRepository {
         email: user.email,
         password_hash: user.password_hash,
         is_active: true,
-        usersRoles: {
+        roles: {
           create: [
             {
               role: {

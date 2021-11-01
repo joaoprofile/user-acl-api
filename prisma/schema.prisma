@@ -10,7 +10,7 @@ datasource db {
 model User {
   id                  String     @id @default(uuid())
   tenant              Tenant     @relation(fields: [tenant_id], references: [id])
-  tenant_id           String     @unique
+  tenant_id           String
   name                String
   email               String     @unique
   password_hash       String
@@ -18,7 +18,7 @@ model User {
   is_active           Boolean    @default(false)
   last_login          DateTime   @default(now())
   created_at          DateTime   @default(now())
-  usersRoles          UserRole[]
+  roles               UserRole[]
 
   @@map("users")
 }
@@ -52,26 +52,25 @@ model UserRole {
 }
 
 model Role {
-  id               String           @id @default(uuid())
-  tenant_id        String?
-  name             String
-  description      String
-  created_at       DateTime         @default(now())
-  rolesPermissions RolePermission[]
-  usersRoles       UserRole[]
+  id          String           @id @default(uuid())
+  tenant_id   String?
+  name        String
+  description String
+  created_at  DateTime         @default(now())
+  permissions RolePermission[]
+  users       UserRole[]
 
   @@unique([tenant_id, name])
   @@map("roles")
 }
 
 model Permission {
-  id               String           @id @default(uuid())
-  resource         String           @unique
-  method           String
-  action           String
-  description      String
-  created_at       DateTime         @default(now())
-  rolesPermissions RolePermission[]
+  id          String           @id @default(uuid())
+  method      String
+  action      String
+  description String
+  created_at  DateTime         @default(now())
+  roles       RolePermission[]
 
   @@map("permissions")
 }
