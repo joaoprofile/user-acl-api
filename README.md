@@ -38,7 +38,7 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 
 > Obs.: Nesse projeto temos autenticação via OAuth com o GitHub e autenticação normal usuário e senha
 - Clone o repositório e acesse a pasta;
-- Faça uma copia do arquivo `.env.example` para `.env` e preencha com as suas credenciais do GitHub;
+- Faça uma copia do arquivo `.env.example` para `.env` e preencha com as suas credenciais e variáveis dos demais serviços.;
 - Instale as dependências com `yarn`;
 - Executa as migrations com `yarn prisma migrate dev`;
 - Executa as seeds com `yarn prisma db seed`;
