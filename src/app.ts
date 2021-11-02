@@ -30,7 +30,10 @@ export class App {
         resources: [
           `POST: ${config.SERVER.BASE_URL}/accounts/sign-up`,
           `POST: ${config.SERVER.BASE_URL}/auth/sign-in`,
+          `GET: ${config.SERVER.BASE_URL}/auth/roles`,
           `POST: ${config.SERVER.BASE_URL}/auth/roles`,
+          `POST: ${config.SERVER.BASE_URL}/auth/permissions`,
+          `POST: ${config.SERVER.BASE_URL}/users`,
         ]
       })
     })
