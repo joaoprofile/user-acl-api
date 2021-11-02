@@ -36,7 +36,7 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 
 ## 🚀 Como executar
 
-> Obs.: Nesse projeto temos autenticação via OAuth com o GitHub e autenticação normal usuário e senha
+> Nesse projeto temos autenticação via OAuth normal usuário e senha, não esqueça de criar uma SECRET JWT no .env
 - Clone o repositório e acesse a pasta;
 - Faça uma copia do arquivo `.env.example` para `.env` e preencha com as suas credenciais e variáveis dos demais serviços.;
 - Instale as dependências com `yarn`;
