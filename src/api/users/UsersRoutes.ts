@@ -4,6 +4,7 @@ import { celebrate, Segments, Joi } from 'celebrate'
 import { Route } from "../common/Route"
 import { EnsureAuthentication } from "../middlewares/EnsureAuthentication"
 import { CreateUserController } from "./CreateUserController"
+import { is } from "../middlewares/PermissionRole"
 
 class UsersRoutes extends Route {
 
@@ -20,6 +21,7 @@ class UsersRoutes extends Route {
       }),
 
       EnsureAuthentication,
+      is(["admin"]),
       new CreateUserController().handle
     )
   }

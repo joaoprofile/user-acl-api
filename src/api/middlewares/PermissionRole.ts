@@ -1,53 +1,38 @@
 import { NextFunction, Request, Response } from "express"
 
-import prismaClient from '../../infra/prisma'
+import { container } from "tsyringe"
 
-export function can(permissionsRoutes: string[]) {
+import { AppError, AppErrorType } from "../../core/exception/AppError";
+import { RolesRepository } from "../../infra/prisma/repositories/RolesRepository"
+
+export function is(rolesRoutes: String[]) {
   return async (request: Request, response: Response, next: NextFunction) => {
-    const { user_id } = request
-
-    const user = await prismaClient.user.findMany({})
-    // const user = await UserRepository().findOne({
-    //   where: { id: user_id },
-    //   relations: ["permissions"],
-    // });
+    const user = request.user
 
     if (!user) {
-      return response.status(400).json("User does not exists");
+      return response.status(400).json("Usuário não existe");
     }
 
-    const permissionExists = user.permissions
-      .map((permission) => permission.name)
-      .some((permission) => permissionsRoutes.includes(permission));
+    const { role_id } = user.roles[0]
+    const rolesRepository = container.resolve(RolesRepository)
+    const userRoles = await rolesRepository.listRolesById(role_id)
 
-    if (!permissionExists) {
-      return response.status(401).end();
+    if (!userRoles) {
+      return response.status(400).json("Role não existe");
     }
 
-    return next();
-  };
-}
-
-export function is(rolesRoutes: string[]) {
-  return async (request: Request, response: Response, next: NextFunction) => {
-    const { user_id } = request;
-
-    const user = null
-    // const user = await UserRepository().findOne({
-    //   where: { id: user_id },
-    //   relations: ["roles"],
-    // });
-
-    if (!user) {
-      return response.status(400).json("User does not exists");
-    }
-
-    const roleExists = user.roles
+    const roleExists = userRoles
       .map((role) => role.name)
-      .some((role) => rolesRoutes.includes(role));
+      .some((role) => rolesRoutes.includes(role))
 
     if (!roleExists) {
-      return response.status(401).end();
+      throw new AppError(
+        {
+          status: 401,
+          type: AppErrorType.FORBIDDEN,
+          userMessage: 'Acesso não autorizado!'
+        }
+      )
     }
 
     return next();

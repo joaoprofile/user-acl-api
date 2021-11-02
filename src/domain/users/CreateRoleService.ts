@@ -15,7 +15,6 @@ export class CreateRoleService {
 
   async execute(entity: IRoleDTO) {
     const { tenant_id, name, description } = entity
-    console.log(entity)
     const role = await this.rolesRepository.findByName(tenant_id, name)
 
     if (role) {

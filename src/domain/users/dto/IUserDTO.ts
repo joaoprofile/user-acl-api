@@ -1,3 +1,5 @@
+import { Role } from "./IUserRequestDTO"
+
 export interface IUserDTO {
   id?: string
   tenant_id?: string
@@ -9,4 +11,5 @@ export interface IUserDTO {
   last_login?: Date
   is_active?: boolean
   created_at?: Date
+  roles?: Role[]
 }

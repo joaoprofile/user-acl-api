@@ -1,3 +1,7 @@
+interface RoleType {
+  role_id: string
+}
+
 declare namespace Express {
   export interface Request {
     user: {
@@ -5,6 +9,7 @@ declare namespace Express {
       tenant_id: string
       name: string
       email: string
+      roles: RoleType[]
     }
   }
 }

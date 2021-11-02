@@ -69,15 +69,12 @@ export class AuthSignInService {
         id: user.id,
         tenant_id: user.tenant_id,
         name: user.name,
-        email: user.email
+        email: user.email,
+        roles: user.roles
       }
     },
       SECRET,
       { expiresIn: EXPIRES_IN })
-
-    // Update last login
-    user.last_login = new Date()
-    // await this.usersRepository.save(user)
 
     delete user.password_hash
 

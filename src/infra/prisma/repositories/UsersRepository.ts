@@ -32,7 +32,12 @@ export class UsersRepository implements IUsersRepository {
         password_hash: true,
         is_active: true,
         is_AccountConfirmed: true,
-      }
+        roles: {
+          select: {
+            role_id: true,
+          }
+        },
+      },
     })
 
     return user

@@ -7,6 +7,7 @@ import { CreateRoleController } from "./CreateRoleController"
 import { EnsureAuthentication } from "../middlewares/EnsureAuthentication"
 import { ListRolesController } from "./ListRolesController"
 import { CreatePermissionController } from "./CreatePermissionController"
+import { is } from "../middlewares/PermissionRole"
 
 class AuthRoutes extends Route {
 
@@ -25,6 +26,7 @@ class AuthRoutes extends Route {
     route.get(
       '/auth/roles',
       EnsureAuthentication,
+      is(["admin"]),
       new ListRolesController().handle
     )
 
@@ -37,6 +39,7 @@ class AuthRoutes extends Route {
         },
       }),
       EnsureAuthentication,
+      is(["admin"]),
       new CreateRoleController().handle
     )
 
@@ -65,6 +68,7 @@ class AuthRoutes extends Route {
         },
       }),
       EnsureAuthentication,
+      is(["admin"]),
       new CreatePermissionController().handle
     )
   }

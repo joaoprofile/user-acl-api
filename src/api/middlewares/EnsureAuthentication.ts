@@ -4,15 +4,10 @@ import { verify } from "jsonwebtoken"
 
 import { config } from '../../core/config/environment'
 import { AppError, AppErrorType } from '../../core/exception/AppError';
+import { IUserRequest } from '../../domain/users/dto/IUserRequestDTO';
 
-interface IUser {
-  id: string
-  tenant_id: string
-  name: string
-  email: string
-}
 interface TokenPayload {
-  user: IUser
+  user: IUserRequest
 }
 
 export function EnsureAuthentication(request: Request, response: Response, next: NextFunction) {
