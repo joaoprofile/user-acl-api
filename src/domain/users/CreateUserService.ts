@@ -1,6 +1,7 @@
 import { inject, injectable } from 'tsyringe'
 
 import { AppError, AppErrorType } from '../../core/exception/AppError'
+import { BCryptHashProvider } from '../../infra/providers/BCryptHashProvider'
 import { IUserDTO } from './dto/IUserDTO'
 import { IUsersRepository } from './IUsersRepository'
 
@@ -25,11 +26,15 @@ export class CreateUserService {
       })
     }
 
+    // Create user
+    const hashProvider = new BCryptHashProvider()
+    const hashedPassword = await hashProvider.generateHash(password_hash)
+
     const createdRole = await this.usersRepository.save({
       tenant_id,
       name,
       email,
-      password_hash,
+      password_hash: hashedPassword,
       role_id
     })
 

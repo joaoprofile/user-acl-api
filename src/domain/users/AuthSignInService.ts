@@ -5,6 +5,7 @@ import { config } from '../../core/config/environment'
 import { AppError, AppErrorType } from '../../core/exception/AppError'
 import { IHashProvider } from '../../core/providers/IHashProvider'
 import { IAccessTokenResponseDTO } from '../users/dto/IAccessTokenResponseDTO'
+import { IRolesRepository } from './IRolesRepository'
 import { IUsersRepository } from './IUsersRepository'
 
 interface IUserSignIn {
@@ -19,6 +20,9 @@ export class AuthSignInService {
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
 
+    @inject('RolesRepository')
+    private rolesRepository: IRolesRepository,
+
     @inject('HashProvider')
     private hashProvider: IHashProvider
   ) {
@@ -31,7 +35,7 @@ export class AuthSignInService {
       throw new AppError({
         status: 401,
         type: AppErrorType.FORBIDDEN,
-        userMessage: 'Login e/ou Senha não conferem'
+        userMessage: 'Login e/ou Senha não conferem...'
       })
     }
     if (!user.is_active) {
@@ -58,7 +62,7 @@ export class AuthSignInService {
       throw new AppError({
         status: 401,
         type: AppErrorType.FORBIDDEN,
-        userMessage: 'Login e/ou Senha não conferem'
+        userMessage: 'Login e/ou Senha não conferem ///'
       })
     }
 
@@ -78,6 +82,22 @@ export class AuthSignInService {
 
     delete user.password_hash
 
-    return { token }
+    const role_id = user.roles[0].role_id
+    const userRoles = await this.rolesRepository.listRolesById(role_id)
+    if (!userRoles) {
+      throw new AppError({
+        status: 401,
+        type: AppErrorType.FORBIDDEN,
+        userMessage: 'User nothing permission roles'
+      })
+    }
+
+    return {
+      user: {
+        name: user.name,
+        roles: userRoles[0].name,
+      },
+      token
+    }
   }
 }
