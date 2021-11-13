@@ -19,6 +19,7 @@ Esse projeto foi desenvolvido com os seguintes Pattern e Design:
 - Service
 - Repository
 - IoC
+- Decorator
 
 Princípios SOLID:
 - Dependency inversion principle
